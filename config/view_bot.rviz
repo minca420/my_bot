@@ -126,8 +126,8 @@ Visualization Manager:
           Show Trail: false
           Value: true
       Mass Properties:
-        Inertia: true
-        Mass: true
+        Inertia: false
+        Mass: false
       Name: RobotModel
       TF Prefix: ""
       Update Interval: 0
@@ -179,7 +179,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.665347695350647
+      Distance: 1.7017722129821777
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -194,10 +194,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.26020291447639465
+      Pitch: -0.44979625940322876
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.7803959846496582
+      Yaw: 2.1303937435150146
     Saved: ~
 Window Geometry:
   Displays:
@@ -216,4 +216,4 @@ Window Geometry:
     collapsed: false
   Width: 1200
   X: 542
-  Y: 1373
+  Y: 1277

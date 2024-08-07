@@ -65,7 +65,8 @@ def generate_launch_description():
         package='ros_gz_bridge',
         executable='parameter_bridge',
         arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
-                   '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry'
+                   '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
+                   '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V'
                    ],
         parameters=[{'qos_overrides./.subscriber.reliability': 'reliable'}],
         #             'qos_overrides./model/vehicle_green.subscriber.reliability': 'reliable'}],
@@ -94,8 +95,8 @@ def generate_launch_description():
     return LaunchDescription([
         gazebo,
         robot_state_publisher,
-    #    rviz,
-    #    joint_state_publisher_gui,
+        # rviz,
+        # joint_state_publisher_gui,
         spawn,
         bridge
     ])
