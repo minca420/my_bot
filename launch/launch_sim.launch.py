@@ -34,17 +34,22 @@ def generate_launch_description():
     robot_description_config = xacro.process_file(xacro_file)
     
     # Create a robot_state_publisher node
-    params = {'use_sim_time': True,'robot_description': robot_description_config.toxml()}
+    params = {'use_sim_time': True,'robot_description': robot_description_config.toxml(),  'publish_tf': True,
+                'base_frame_id': 'base_link',
+                'odom_frame_id': 'odom',
+                'left_wheel': 'left_wheel_joint',
+                'right_wheel': 'right_wheel_joint',}
     robot_state_publisher = Node(
            package='robot_state_publisher',
            executable='robot_state_publisher',
            name='robot_state_publisher',
            output='screen',
            parameters=[params],
-           arguments=[])
+           arguments=['joint_state_broadcaster'])
 
     # Gazebo Sim
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    params = {'use_sim_time': True}
     gazebo = IncludeLaunchDescription(
        PythonLaunchDescriptionSource(
            os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
@@ -66,9 +71,12 @@ def generate_launch_description():
         executable='parameter_bridge',
         arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',
                    '/odometry@nav_msgs/msg/Odometry@gz.msgs.Odometry',
-                   '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V'
+                   '/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V',
+                   '/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
+                   '/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock',
+                   '/scan/points@sensor_msgs/msg/PointCloud2@gz.msgs.PointCloudPacked'
                    ],
-        parameters=[{'qos_overrides./.subscriber.reliability': 'reliable'}],
+        parameters=[{'qos_overrides./my_custom_model.subscriber.reliability': 'best effort'}],
         #             'qos_overrides./model/vehicle_green.subscriber.reliability': 'reliable'}],
         output='screen'
     )
@@ -79,7 +87,7 @@ def generate_launch_description():
         executable='joint_state_publisher_gui',
         name='joint_state_publisher_gui',
         output='screen',
-        parameters=[{'use_gui': True}],
+        parameters=[{'use_gui': True}, {'use_sim_time': True}],
     )
 
     # Spawn
@@ -96,7 +104,7 @@ def generate_launch_description():
         gazebo,
         robot_state_publisher,
         # rviz,
-        # joint_state_publisher_gui,
+        joint_state_publisher_gui,
         spawn,
         bridge
     ])

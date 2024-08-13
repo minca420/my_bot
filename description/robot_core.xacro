@@ -68,7 +68,7 @@
             <geometry>
                 <cylinder radius="0.025" length="0.018"/>
             </geometry>
-            <surface>
+            <!-- <surface>
                 <friction>
                     <ode>
                         <mu>100000.0</mu>
@@ -80,7 +80,7 @@
                         <min_depth>0.003</min_depth>
                     </ode>
                 </contact>
-            </surface>
+            </surface> -->
         </collision>
         <xacro:inertial_cylinder mass="0.03" length="0.018" radius="0.025">
             <origin xyz="0 0 0" rpy="0 0 0"/>
