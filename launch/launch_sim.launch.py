@@ -99,12 +99,26 @@ def generate_launch_description():
                     'z': 0.0,
                     'topic': '/robot_description'}],
                  output='screen')
-
+    
+    diff_drive_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["diff_cont"]
+    )
+        
+    joint_broad_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_broad"]
+    )
+     
     return LaunchDescription([
         gazebo,
         robot_state_publisher,
         # rviz,
         joint_state_publisher_gui,
         spawn,
-        bridge
+        bridge,
+        diff_drive_spawner,
+        joint_broad_spawner
     ])
